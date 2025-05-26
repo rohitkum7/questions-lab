@@ -80,3 +80,8 @@ You can follow the documentation step by step [Link](https://github.com/judge0/j
 `npx prisma generate`
 `npx prisma migrate dev`
 `npx prisma db push`
+
+### Connect Neon db
+
+Adding the Database Url value of neondb just run the following command to sync
+`npx prisma migrate dev --name init`
