@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import authRoutes from "./routes/authRouter.js";
 import problemRoutes from "./routes/problemRouter.js";
@@ -16,6 +17,12 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.ORIGIN_ACCESS_URL,
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Hello Guys how are you?");
