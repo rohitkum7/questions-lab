@@ -20,6 +20,7 @@ import {
 
 import { useProblemStore } from "../store/useProblemStore";
 import { useExecutionStore } from "../store/useExecutionStore";
+import { useSubmissionStore } from "../store/useSubmissionStore";
 import { getLanguageId } from "../libs/lang";
 import SubmissionResults from "../components/SubmissionResults";
 import SubmissionsList from "../components/SubmissionList";
@@ -33,12 +34,20 @@ const ProblemPage = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [testcases, setTestCases] = useState([]);
 
-  const { executeCode, submission, isExecuting } = useExecutionStore();
+  //Submission Store
+  const {
+    submission: submissions,
+    isLoading: isSubmissionsLoading,
+    getSubmissionForProblem,
+    getSubmissionCountForProblem,
+    submissionCount,
+  } = useSubmissionStore();
 
-  const submissionCount = 5;
+  const { executeCode, submission, isExecuting } = useExecutionStore();
 
   useEffect(() => {
     getProblemById(id);
+    getSubmissionCountForProblem(id);
   }, [id]);
 
   useEffect(() => {
@@ -52,6 +61,14 @@ const ProblemPage = () => {
       );
     }
   }, [problem, selectedLanguage]);
+
+  useEffect(() => {
+    if (activeTab === "submissions" && id) {
+      getSubmissionForProblem(id);
+    }
+  }, [activeTab, id]);
+
+  // console.log("submission: ", submissions);
 
   const handleLanguageChange = (e) => {
     const lang = e.target.value;
@@ -144,17 +161,13 @@ const ProblemPage = () => {
           </div>
         );
       case "submissions":
-        // return (
-        //   <SubmissionsList
-        //     submissions={submissions}
-        //     isLoading={isSubmissionsLoading}
-        //   />
-        // );
         return (
-          <div className="p-4 text-center text-base-content/70">
-            No Submissions
-          </div>
+          <SubmissionsList
+            submissions={submissions}
+            isLoading={isSubmissionsLoading}
+          />
         );
+
       case "discussion":
         return (
           <div className="p-4 text-center text-base-content/70">
