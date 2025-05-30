@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useProblemStore } from "../store/useProblemStore";
 import { Loader } from "lucide-react";
 import { ProblemsTable } from "../components/ProblemsTable";
+import { useAuthStore } from "../store/useAuthStore";
 
 const HomePage = () => {
   const { getAllProblems, problems, isProblemsLoading } = useProblemStore();
