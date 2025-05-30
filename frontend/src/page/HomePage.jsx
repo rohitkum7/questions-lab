@@ -6,11 +6,41 @@ import { ProblemsTable } from "../components/ProblemsTable";
 const HomePage = () => {
   const { getAllProblems, problems, isProblemsLoading } = useProblemStore();
 
-  useEffect(() => {
-    getAllProblems();
-  }, [getAllProblems]);
+  // useEffect(() => {
+  //   getAllProblems();
+  // }, [getAllProblems]);
 
-  console.log(problems);
+  // console.log(problems);
+
+  useEffect(() => {
+    // Debug information
+    console.log("HomePage Debug:", {
+      authUser: authUser,
+      isCheckingAuth: isCheckingAuth,
+      cookies: document.cookie,
+      userAgent: navigator.userAgent,
+    });
+
+    // Only call getAllProblems when auth is ready
+    if (!isCheckingAuth && authUser) {
+      console.log("Auth confirmed, fetching problems...");
+      getAllProblems();
+    } else if (!isCheckingAuth && !authUser) {
+      console.log("No auth user found");
+    }
+  }, [getAllProblems, authUser, isCheckingAuth]);
+
+  console.log("Current problems:", problems);
+
+  // Don't render until auth check is complete
+  if (isCheckingAuth) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="size-10 animate-spin" />
+        <span className="ml-2">Checking authentication...</span>
+      </div>
+    );
+  }
 
   if (isProblemsLoading) {
     return (
