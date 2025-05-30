@@ -12,6 +12,10 @@ export const useProblemStore = create((set) => ({
   getAllProblems: async () => {
     try {
       set({ isProblemLoading: true });
+
+      // Add a small delay to ensure auth is fully loaded
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       const res = await axiosInstance.get("/problems/get-all-problems");
       set({ problems: res.data.problems });
     } catch (error) {
@@ -47,4 +51,7 @@ export const useProblemStore = create((set) => ({
       set({ isProblemLoading: false });
     }
   },
+
+  // Helper to clear errors
+  clearError: () => set({ error: null }),
 }));
