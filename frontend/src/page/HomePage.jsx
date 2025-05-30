@@ -5,6 +5,7 @@ import { ProblemsTable } from "../components/ProblemsTable";
 
 const HomePage = () => {
   const { getAllProblems, problems, isProblemsLoading } = useProblemStore();
+  const { authUser, isCheckingAuth } = useAuthStore();
 
   // useEffect(() => {
   //   getAllProblems();
