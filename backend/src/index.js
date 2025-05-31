@@ -26,15 +26,14 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: process.env.ORIGIN_ACCESS_URL
-      ? process.env.ORIGIN_ACCESS_URL.split(",").map((url) => url.trim())
-      : [
-          "https://questions-lab-frontend.onrender.com",
-          "http://localhost:5173",
-        ],
+    origin:
+      process.env.ORIGIN_ACCESS_URL &&
+      process.env.ORIGIN_ACCESS_URL.split(",").map((url) => url.trim()),
     credentials: true,
   })
 );
+
+console.log(process.env.ORIGIN_ACCESS_URL);
 
 app.get("/", (req, res) => {
   res.send("Hello Guys how are you?");
