@@ -1,9 +1,11 @@
 import { create } from "zustand";
 import { axiosInstance } from "../libs/axios";
 import toast from "react-hot-toast";
+import { data } from "react-router-dom";
 
 export const usePlaylistStore = create((set, get) => ({
   playlists: [],
+  problemsInPlaylist: [],
   currentPlaylist: null,
   isLoading: false,
   error: null,
@@ -81,8 +83,8 @@ export const usePlaylistStore = create((set, get) => ({
   removeProblemFromPlaylist: async (playlistId, problemIds) => {
     try {
       set({ isLoading: true });
-      await axiosInstance.post(`/playlist/${playlistId}/remove-problem`, {
-        problemIds,
+      await axiosInstance.delete(`/playlist/${playlistId}/remove-problem`, {
+        data: { problemIds },
       });
 
       toast.success("Problem removed from playlist");
@@ -112,6 +114,19 @@ export const usePlaylistStore = create((set, get) => ({
     } catch (error) {
       console.error("Error deleting playlist:", error);
       toast.error("Failed to delete playlist");
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  getProblemsInPlaylist: async () => {
+    try {
+      set({ isLoading: true });
+      const response = await axiosInstance.get("/playlist/problemsInPlaylist");
+      set({ problemsInPlaylist: response.data.response });
+    } catch (error) {
+      console.error("Error fetching problemsInPlaylist:", error);
+      toast.error("Failed to fetch problemsInPlaylist");
     } finally {
       set({ isLoading: false });
     }

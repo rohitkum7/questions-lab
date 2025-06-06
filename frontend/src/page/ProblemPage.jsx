@@ -30,7 +30,7 @@ const ProblemPage = () => {
   const { getProblemById, problem, isProblemLoading } = useProblemStore();
   const [code, setCode] = useState("");
   const [activeTab, setActiveTab] = useState("description");
-  const [selectedLanguage, setSelectedLanguage] = useState("javascript");
+  const [selectedLanguage, setSelectedLanguage] = useState("JAVASCRIPT");
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [testcases, setTestCases] = useState([]);
 
@@ -43,7 +43,8 @@ const ProblemPage = () => {
     submissionCount,
   } = useSubmissionStore();
 
-  const { executeCode, submission, isExecuting } = useExecutionStore();
+  const { runCode, submitCode, submission, isExecuting, runResults, clearAll } =
+    useExecutionStore();
 
   useEffect(() => {
     getProblemById(id);
@@ -76,15 +77,47 @@ const ProblemPage = () => {
     setCode(problem.codeSnippets?.[lang] || "");
   };
 
+  // const handleRunCode = (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const language_id = getLanguageId(selectedLanguage);
+  //     const stdin = problem.testcases.map((tc) => tc.input);
+  //     const expected_outputs = problem.testcases.map((tc) => tc.output);
+  //     executeCode(code, language_id, stdin, expected_outputs, id);
+  //   } catch (error) {
+  //     console.log("Error Execution code", error);
+  //   }
+  // };
+
+  // Handler for running code (testing without saving)
   const handleRunCode = (e) => {
     e.preventDefault();
     try {
+      clearAll();
       const language_id = getLanguageId(selectedLanguage);
       const stdin = problem.testcases.map((tc) => tc.input);
       const expected_outputs = problem.testcases.map((tc) => tc.output);
-      executeCode(code, language_id, stdin, expected_outputs, id);
+
+      // Use runCode for testing without saving to database
+      runCode(code, language_id, stdin, expected_outputs);
     } catch (error) {
-      console.log("Error Execution code", error);
+      console.log("Error running code", error);
+    }
+  };
+
+  // Handler for submitting code (official submission with saving)
+  const handleSubmitCode = (e) => {
+    e.preventDefault();
+    try {
+      clearAll();
+      const language_id = getLanguageId(selectedLanguage);
+      const stdin = problem.testcases.map((tc) => tc.input);
+      const expected_outputs = problem.testcases.map((tc) => tc.output);
+
+      // Use submitCode for official submission
+      submitCode(code, language_id, stdin, expected_outputs, id);
+    } catch (error) {
+      console.log("Error submitting code", error);
     }
   };
 
@@ -339,7 +372,12 @@ const ProblemPage = () => {
                     {!isExecuting && <Play className="w-4 h-4" />}
                     Run Code
                   </button>
-                  <button className="btn btn-success gap-2">
+                  <button
+                    className={`btn btn-success gap-2 ${
+                      isExecuting ? "loading" : ""
+                    }`}
+                    onClick={handleSubmitCode}
+                  >
                     Submit Solution
                   </button>
                 </div>
@@ -353,6 +391,8 @@ const ProblemPage = () => {
         <div className="card-body">
           {submission ? (
             <SubmissionResults submission={submission} />
+          ) : runResults ? (
+            <SubmissionResults submission={runResults} />
           ) : (
             <>
               <div className="flex items-center justify-between mb-6">

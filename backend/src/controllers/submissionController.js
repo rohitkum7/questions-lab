@@ -85,3 +85,59 @@ export const getAllTheSubmissionsForProblem = async (req, res) => {
       .json({ success: false, error: "Failed to fetch submissions" });
   }
 };
+
+export const getAllSubmissionsByUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ success: false, error: "User ID is missing or invalid" });
+    }
+
+    const submissions = await db.submission.findMany({
+      where: {
+        userId,
+        status: "Accepted",
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+      select: {
+        problemId: true,
+        sourceCode: true,
+        language: true,
+        updatedAt: true,
+        problem: {
+          select: {
+            title: true,
+            difficulty: true,
+          },
+        },
+      },
+    });
+
+    const uniqueSubmissionsMap = new Map();
+
+    for (const sub of submissions) {
+      if (!uniqueSubmissionsMap.has(sub.problemId)) {
+        uniqueSubmissionsMap.set(sub.problemId, sub);
+      }
+    }
+
+    const uniqueSubmissions = Array.from(uniqueSubmissionsMap.values());
+
+    res.status(200).json({
+      success: true,
+      message: "Submissions fetched successfully",
+      count: uniqueSubmissions.length,
+      submissions: uniqueSubmissions,
+    });
+  } catch (error) {
+    console.error("Fetch Submissions Error:", error);
+    res
+      .status(500)
+      .json({ success: false, error: "Failed to fetch submissions" });
+  }
+};

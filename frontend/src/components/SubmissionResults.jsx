@@ -56,7 +56,9 @@ const SubmissionResults = ({ submission }) => {
               <Clock className="w-4 h-4" />
               Avg. Runtime
             </h3>
-            <div className="text-lg font-bold">{avgTime.toFixed(3)} s</div>
+            <div className="text-lg font-bold">
+              {avgTime ? avgTime.toFixed(3) : 0} s
+            </div>
           </div>
         </div>
 
@@ -66,7 +68,9 @@ const SubmissionResults = ({ submission }) => {
               <Memory className="w-4 h-4" />
               Avg. Memory
             </h3>
-            <div className="text-lg font-bold">{avgMemory.toFixed(0)} KB</div>
+            <div className="text-lg font-bold">
+              {avgMemory ? avgMemory.toFixed(0) : 0} KB
+            </div>
           </div>
         </div>
       </div>

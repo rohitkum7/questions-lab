@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { authUser } = useAuthStore();
-  console.log("Auth_User", authUser);
+  // console.log("Auth_User", authUser);
 
   return (
     <nav className="sticky top-0 z-50 w-full py-5">
@@ -31,7 +31,7 @@ const Navbar = () => {
             >
               <div className="w-10 rounded-full ">
                 <img
-                  src={authUser?.image || "https://i.pravatar.cc/150?img=56"}
+                  src={authUser?.image || "https://i.pravatar.cc/150?img=3"}
                   alt="User Avatar"
                   className="object-cover"
                 />
@@ -50,7 +50,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  to="/profile"
+                  to="/profile/dashboard"
                   className="hover:bg-primary hover:text-white text-base font-semibold"
                 >
                   <User className="w-4 h-4 mr-2" />

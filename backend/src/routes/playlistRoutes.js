@@ -6,12 +6,14 @@ import {
   deletePlaylist,
   getAllListDetails,
   getPlaylistDetails,
+  problemInPlaylist,
   removeProblemFromPlaylist,
 } from "../controllers/playlistController.js";
 
 const playlistRoutes = express.Router();
 
 playlistRoutes.get("/", authMiddleware, getAllListDetails);
+playlistRoutes.get("/problemsInPlaylist", authMiddleware, problemInPlaylist);
 
 playlistRoutes.get("/:playlistId", authMiddleware, getPlaylistDetails);
 

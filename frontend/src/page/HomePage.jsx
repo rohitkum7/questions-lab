@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useProblemStore } from "../store/useProblemStore";
-import { Loader } from "lucide-react";
+import { Loader, Loader2 } from "lucide-react";
 import { ProblemsTable } from "../components/ProblemsTable";
 import { useAuthStore } from "../store/useAuthStore";
+import { useActions } from "../store/useAction";
 
 const HomePage = () => {
   const { getAllProblems, problems, isProblemsLoading } = useProblemStore();
+  const { refreshTrigger } = useActions();
   const { authUser, isCheckingAuth } = useAuthStore();
 
   // useEffect(() => {
@@ -16,23 +18,23 @@ const HomePage = () => {
 
   useEffect(() => {
     // Debug information
-    console.log("HomePage Debug:", {
-      authUser: authUser,
-      isCheckingAuth: isCheckingAuth,
-      cookies: document.cookie,
-      userAgent: navigator.userAgent,
-    });
+    // console.log("HomePage Debug:", {
+    //   authUser: authUser,
+    //   isCheckingAuth: isCheckingAuth,
+    //   cookies: document.cookie,
+    //   userAgent: navigator.userAgent,
+    // });
 
     // Only call getAllProblems when auth is ready
     if (!isCheckingAuth && authUser) {
-      console.log("Auth confirmed, fetching problems...");
+      // console.log("Auth confirmed, fetching problems...");
       getAllProblems();
     } else if (!isCheckingAuth && !authUser) {
-      console.log("No auth user found");
+      // console.log("No auth user found");
     }
-  }, [getAllProblems, authUser, isCheckingAuth]);
+  }, [getAllProblems, authUser, isCheckingAuth, refreshTrigger]);
 
-  console.log("Current problems:", problems);
+  // console.log("Current problems:", problems);
 
   // Don't render until auth check is complete
   if (isCheckingAuth) {
@@ -60,15 +62,16 @@ const HomePage = () => {
       </h1>
 
       <p className="mt-4 text-center text-lg font-semibold text-gray-500 dark:text-gray-400 z-10">
-        A Platform Inspired by Leetcode which helps you to prepare for coding
-        interviews and helps you to improve your coding skills by solving coding
-        problems
+        Level up your coding game! Inspired by LeetCode, this platform helps you
+        build confidence and crack coding interviews one problem at a time.
       </p>
       {problems.length > 0 ? (
         <ProblemsTable problems={problems} />
       ) : (
         <p className="mt-10 text-center text-lg font-semibold text-gray-500 dark:text-gray-400 z-10 border border-primary px-4 py-2 rounded-md border-dashed">
-          No problems found
+          {/* No problems found */}
+          <Loader2 className="size-10 animate-spin mx-auto" />
+          No problem can withstand the assault of sustained thinking.
         </p>
       )}
     </div>

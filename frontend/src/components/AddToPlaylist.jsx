@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { X, Plus, Loader } from "lucide-react";
+import { X, Plus, Loader, Trash2 } from "lucide-react";
 import { usePlaylistStore } from "../store/usePlaylistStore";
 
-const AddToPlaylist = ({ isOpen, onClose, problemId }) => {
-  const { playlists, getAllPlaylists, addProblemToPlaylist, isLoading } =
-    usePlaylistStore();
+const AddToPlaylist = ({ isOpen, onClose, problemId, onSuccess }) => {
+  const {
+    playlists,
+    getAllPlaylists,
+    addProblemToPlaylist,
+    isLoading,
+    removeProblemFromPlaylist,
+  } = usePlaylistStore();
   const [selectedPlaylist, setSelectedPlaylist] = useState("");
 
-  console.log(playlists);
+  // console.log(playlists);
 
   useEffect(() => {
     if (isOpen) {
@@ -21,6 +26,17 @@ const AddToPlaylist = ({ isOpen, onClose, problemId }) => {
 
     await addProblemToPlaylist(selectedPlaylist, [problemId]);
     onClose();
+    if (onSuccess) onSuccess();
+  };
+
+  const handleDeleteQuestionFromPlaylist = async (e) => {
+    e.preventDefault();
+    if (!selectedPlaylist) return;
+    console.log([problemId]);
+
+    await removeProblemFromPlaylist(selectedPlaylist, [problemId]);
+    onClose();
+    if (onSuccess) onSuccess();
   };
 
   if (!isOpen) return null;
@@ -70,6 +86,12 @@ const AddToPlaylist = ({ isOpen, onClose, problemId }) => {
                 <Plus className="w-4 h-4" />
               )}
               Add to Playlist
+            </button>
+            <button
+              className="btn btn-error"
+              onClick={handleDeleteQuestionFromPlaylist}
+            >
+              <Trash2 />
             </button>
           </div>
         </form>

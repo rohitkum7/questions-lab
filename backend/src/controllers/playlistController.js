@@ -151,3 +151,34 @@ export const removeProblemFromPlaylist = async (req, res) => {
     res.status(500).json({ error: "Failed to remove problem from playlist" });
   }
 };
+
+export const problemInPlaylist = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const response = await db.problemInPlaylist.findMany({
+      where: {
+        playlist: {
+          userId: userId,
+        },
+      },
+      select: {
+        problemId: true,
+        playListId: true,
+        playlist: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Fetched all playlist",
+      response,
+    });
+  } catch (error) {
+    console.error("Error fetching playlist:", error.message);
+    res.status(500).json({ error: "Failed to remove problem from playlist" });
+  }
+};

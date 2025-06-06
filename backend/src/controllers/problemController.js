@@ -32,7 +32,7 @@ export const createProblem = async (req, res) => {
     // Code: ...
     for (const [language, solutionCode] of Object.entries(referenceSolutions)) {
       const languageId = getJudge0LanguageId(language);
-      console.log("hi");
+      // console.log("hi");
       if (!languageId) {
         return res.status(400).json({
           success: false,
@@ -58,15 +58,15 @@ export const createProblem = async (req, res) => {
       // loop through each refrence solution for different language
       for (let i = 0; i < results.length; i++) {
         const result = results[1];
-        console.log("Result----", result);
+        // console.log("Result----", result);
 
-        console.log(
-          `TestCase ${
-            i + 1
-          } and language ${language} ---- result ${JSON.stringify(
-            result.status.description
-          )}`
-        );
+        // console.log(
+        //   `TestCase ${
+        //     i + 1
+        //   } and language ${language} ---- result ${JSON.stringify(
+        //     result.status.description
+        //   )}`
+        // );
 
         if (result.status.id !== 3) {
           return res.status(400).json({
@@ -128,7 +128,7 @@ export const getAllProblems = async (req, res) => {
       problems,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({
       error: "Error while Fetching Problems",
     });
@@ -151,7 +151,7 @@ export const getProblemById = async (req, res) => {
       problem,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({
       error: "Error while Fetching Problem by id",
     });
@@ -195,40 +195,40 @@ export const updateProblem = async (req, res) => {
     } = req.body;
 
     // Optional: re-validate reference solutions
-    if (referenceSolutions && testcases) {
-      for (const [language, solutionCode] of Object.entries(
-        referenceSolutions
-      )) {
-        const languageId = getJudge0LanguageId(language);
+    // if (referenceSolutions && testcases) {
+    //   for (const [language, solutionCode] of Object.entries(
+    //     referenceSolutions
+    //   )) {
+    //     const languageId = getJudge0LanguageId(language);
 
-        if (!languageId) {
-          return res.status(400).json({
-            success: false,
-            message: `language ${language} is not supported`,
-          });
-        }
+    //     if (!languageId) {
+    //       return res.status(400).json({
+    //         success: false,
+    //         message: `language ${language} is not supported`,
+    //       });
+    //     }
 
-        const submissions = testcases.map(({ input, output }) => ({
-          source_code: solutionCode,
-          language_id: languageId,
-          stdin: input,
-          expected_output: output,
-        }));
+    //     const submissions = testcases.map(({ input, output }) => ({
+    //       source_code: solutionCode,
+    //       language_id: languageId,
+    //       stdin: input,
+    //       expected_output: output,
+    //     }));
 
-        const submissionResults = await submitBatch(submissions);
-        const tokens = submissionResults.map((res) => res.token);
-        const results = await pollBatchResults(tokens);
+    //     const submissionResults = await submitBatch(submissions);
+    //     const tokens = submissionResults.map((res) => res.token);
+    //     const results = await pollBatchResults(tokens);
 
-        for (let i = 0; i < results.length; i++) {
-          const result = results[i];
-          if (result.status.id !== 3) {
-            return res.status(400).json({
-              error: `Testcase ${i + 1} failed for language ${language}`,
-            });
-          }
-        }
-      }
-    }
+    //     for (let i = 0; i < results.length; i++) {
+    //       const result = results[i];
+    //       if (result.status.id !== 3) {
+    //         return res.status(400).json({
+    //           error: `Testcase ${i + 1} failed for language ${language}`,
+    //         });
+    //       }
+    //     }
+    //   }
+    // }
 
     const updatedProblem = await db.problem.update({
       where: { id },
@@ -278,7 +278,7 @@ export const deleteProblem = async (req, res) => {
       message: "Problem deleted Successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({
       error: "Error While deleting the problem",
     });

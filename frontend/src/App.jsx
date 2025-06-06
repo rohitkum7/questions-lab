@@ -79,6 +79,11 @@ import Layout from "./layout/Layout";
 import AdminRoute from "./components/AdminRoute";
 import AddProblem from "./page/AddProblem";
 import ProblemPage from "./page/ProblemPage";
+import AboutUs from "./page/AboutUs";
+import { Profile } from "./page/Profile";
+import { Dashboard } from "./components/Dashboard";
+import { AccountInfo } from "./components/AccountInfo";
+import { UpdateProblem } from "./page/UpdateProblem";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -100,7 +105,9 @@ const App = () => {
     <div className="flex flex-col items-center justify-start">
       <Toaster />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<AboutUs />} />
+
+        <Route path="/home" element={<Layout />}>
           <Route
             index
             element={authUser ? <HomePage /> : <Navigate to={"/login"} />}
@@ -109,23 +116,51 @@ const App = () => {
 
         <Route
           path="/login"
-          element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
+          element={!authUser ? <LoginPage /> : <Navigate to={"/home"} />}
         />
 
         <Route
           path="/signup"
-          element={!authUser ? <SignupPage /> : <Navigate to={"/"} />}
+          element={!authUser ? <SignupPage /> : <Navigate to={"/home"} />}
         />
 
         <Route
           path="/problem/:id"
           element={authUser ? <ProblemPage /> : <Navigate to={"/login"} />}
         />
+        {/* <Route
+          path="/profile"
+          element={authUser ? <Profile /> : <Navigate to={"/login"} />}
+        /> */}
+        <Route
+          path="/profile/dashboard"
+          element={
+            authUser ? (
+              <Profile profileData={"dashboard"} />
+            ) : (
+              <Navigate to={"/login"} />
+            )
+          }
+        />
+        <Route
+          path="/profile/account-info"
+          element={
+            authUser ? (
+              <Profile profileData={"account-info"} />
+            ) : (
+              <Navigate to={"/login"} />
+            )
+          }
+        />
 
         <Route element={<AdminRoute />}>
           <Route
             path="/add-problem"
-            element={authUser ? <AddProblem /> : <Navigate to="/" />}
+            element={authUser ? <AddProblem /> : <Navigate to="/home" />}
+          />
+          <Route
+            path="/update-problem"
+            element={authUser ? <UpdateProblem /> : <Navigate to="/home" />}
           />
         </Route>
       </Routes>
