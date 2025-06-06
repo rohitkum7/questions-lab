@@ -31,7 +31,6 @@ export const useSubmissionStore = create((set) => ({
       const res = await axiosInstance.get(
         `/submission/get-submission/${problemId}`
       );
-      console.log(res.data);
 
       set({ submission: res.data.submissions });
     } catch (error) {

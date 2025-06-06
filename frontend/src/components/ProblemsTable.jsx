@@ -74,7 +74,7 @@ export const ProblemsTable = ({ problems }) => {
 
   const handleDelete = (id) => {
     onDeleteProblem(id);
-    console.log(id);
+    // console.log(id);
   };
 
   const handleAddToPlaylist = (problemId) => {
@@ -204,7 +204,7 @@ export const ProblemsTable = ({ problems }) => {
                                   document
                                     .getElementById(`modal_${problem.id}`)
                                     .showModal();
-                                  console.log(problem.id);
+                                  // console.log(problem.id);
                                 }}
                                 className="btn btn-sm btn-error"
                               >

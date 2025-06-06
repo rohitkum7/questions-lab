@@ -33,7 +33,7 @@ app.use(
   })
 );
 
-console.log(process.env.ORIGIN_ACCESS_URL);
+// console.log(process.env.ORIGIN_ACCESS_URL);
 
 app.get("/", (req, res) => {
   res.send("Hello Guys how are you?");

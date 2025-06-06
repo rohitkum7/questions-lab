@@ -32,7 +32,7 @@ export const useProblemStore = create((set) => ({
       set({ problem: res.data.problem });
       toast.success("Problem fetched Successfully");
     } catch (error) {
-      console.log("Error getting all Problems", error);
+      // console.log("Error getting all Problems", error);
       toast.error("Error in getting problems");
     } finally {
       set({ isProblemLoading: false });
@@ -45,7 +45,7 @@ export const useProblemStore = create((set) => ({
 
       set({ problems: res.data.problems });
     } catch (error) {
-      console.log("Error getting all problems", error);
+      // console.log("Error getting all problems", error);
       toast.error("Error in getting problems");
     } finally {
       set({ isProblemLoading: false });

@@ -10,21 +10,7 @@ const HomePage = () => {
   const { refreshTrigger } = useActions();
   const { authUser, isCheckingAuth } = useAuthStore();
 
-  // useEffect(() => {
-  //   getAllProblems();
-  // }, [getAllProblems]);
-
-  // console.log(problems);
-
   useEffect(() => {
-    // Debug information
-    // console.log("HomePage Debug:", {
-    //   authUser: authUser,
-    //   isCheckingAuth: isCheckingAuth,
-    //   cookies: document.cookie,
-    //   userAgent: navigator.userAgent,
-    // });
-
     // Only call getAllProblems when auth is ready
     if (!isCheckingAuth && authUser) {
       // console.log("Auth confirmed, fetching problems...");

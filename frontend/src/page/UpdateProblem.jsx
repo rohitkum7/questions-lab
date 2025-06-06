@@ -7,7 +7,7 @@ export const UpdateProblem = () => {
   const { problemId, initialData } = location.state || {};
   const onSuccess = (updatedData) => {
     navigate("/home");
-    console.log("Problem updated:", updatedData);
+    // console.log("Problem updated:", updatedData);
   };
   return (
     <div>

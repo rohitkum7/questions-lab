@@ -81,8 +81,6 @@ import AddProblem from "./page/AddProblem";
 import ProblemPage from "./page/ProblemPage";
 import AboutUs from "./page/AboutUs";
 import { Profile } from "./page/Profile";
-import { Dashboard } from "./components/Dashboard";
-import { AccountInfo } from "./components/AccountInfo";
 import { UpdateProblem } from "./page/UpdateProblem";
 
 const App = () => {

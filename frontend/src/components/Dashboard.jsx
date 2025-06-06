@@ -16,7 +16,7 @@ export const Dashboard = () => {
     getAllAcceptedSubmissionsByUser();
   }, []);
 
-  console.log(acceptedSubmissions);
+  // console.log(acceptedSubmissions);
 
   const problemCounts = useMemo(() => {
     const counts = {

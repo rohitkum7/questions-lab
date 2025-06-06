@@ -189,7 +189,7 @@ const UpdateProblemForm = ({ problemId, initialData, onSuccess }) => {
         `/problems/update-problem/${problemId}`,
         value
       );
-      console.log(res.data);
+      // console.log(res.data);
       toast.success(res.data.message || "Problem updated successfully");
 
       // Call success callback if provided, otherwise navigate

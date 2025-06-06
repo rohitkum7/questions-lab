@@ -32,7 +32,7 @@ const AddToPlaylist = ({ isOpen, onClose, problemId, onSuccess }) => {
   const handleDeleteQuestionFromPlaylist = async (e) => {
     e.preventDefault();
     if (!selectedPlaylist) return;
-    console.log([problemId]);
+    // console.log([problemId]);
 
     await removeProblemFromPlaylist(selectedPlaylist, [problemId]);
     onClose();
