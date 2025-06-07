@@ -1,3 +1,5 @@
+//Judge0 with docker Desktop
+
 // import axios from "axios";
 
 // export const getJudge0LanguageId = (language) => {
@@ -54,6 +56,10 @@
 //   };
 //   return LANGUAGE_NAMES[languageId] || "Unknown";
 // }
+
+//-------------------------------------------------------------------------------------
+
+//Judge0 with RapidApi integration
 
 import axios from "axios";
 

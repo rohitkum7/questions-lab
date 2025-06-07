@@ -94,14 +94,18 @@ export const Dashboard = () => {
       </div>
       <div className="m-10">
         <h2 className="text-xl font-bold">Solved Problems</h2>
-        {acceptedSubmissions.map((acceptedSub) => (
-          <DisplayAttempted
-            key={acceptedSub.problemId}
-            problem={acceptedSub.problem.title}
-            sourceCode={acceptedSub.sourceCode}
-            language={acceptedSub.language}
-          />
-        ))}
+        {acceptedSubmissions.length ? (
+          acceptedSubmissions.map((acceptedSub) => (
+            <DisplayAttempted
+              key={acceptedSub.problemId}
+              problem={acceptedSub.problem.title}
+              sourceCode={acceptedSub.sourceCode}
+              language={acceptedSub.language}
+            />
+          ))
+        ) : (
+          <h2 className="text-l text-red-400 mt-4">No Problem Solved</h2>
+        )}
       </div>
     </div>
   );

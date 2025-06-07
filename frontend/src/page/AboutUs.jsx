@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Code,
   Trophy,
@@ -668,13 +668,13 @@ const AboutUs = () => {
                 {["Home", "Problems", "Learn", "Discuss", "Contest"].map(
                   (link) => (
                     <div key={link}>
-                      <a
-                        href="#"
+                      <Link
+                        to={"/home"}
                         className="text-gray-300 text-sm hover:text-white transition-colors duration-200"
                         // Added text-sm
                       >
                         {link}
-                      </a>
+                      </Link>
                     </div>
                   )
                 )}
@@ -690,7 +690,7 @@ const AboutUs = () => {
               <div className="flex space-x-3">
                 {/* Reduced space-x-4 to space-x-3 */}
                 <a
-                  href="#"
+                  href="https://x.com/rk_rkum"
                   className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors duration-300 group"
                   // Reduced w, h
                 >
@@ -698,7 +698,7 @@ const AboutUs = () => {
                   {/* Reduced w, h */}
                 </a>
                 <a
-                  href="#"
+                  href="https://github.com/rohitkum7"
                   className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors duration-300 group"
                   // Reduced w, h
                 >
@@ -706,7 +706,7 @@ const AboutUs = () => {
                   {/* Reduced w, h */}
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/in/rohit-kumar-cr7/"
                   className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors duration-300 group"
                   // Reduced w, h
                 >
@@ -714,12 +714,10 @@ const AboutUs = () => {
                   {/* Reduced w, h */}
                 </a>
                 <a
-                  href="#"
+                  href="mailto:rohitkumar1215225@gmail.com"
                   className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-300 group"
-                  // Reduced w, h
                 >
                   <Mail className="w-4.5 h-4.5 text-gray-300 group-hover:text-white" />
-                  {/* Reduced w, h */}
                 </a>
               </div>
             </div>
